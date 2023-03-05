@@ -1,4 +1,4 @@
-# Multiplayer FPS Game
+# Project Zero
 
 This project is a local multiplayer first-person shooter game that can be played with friends on the same network. It can also be played with Hamachi or similar services. Please note that the project is in an early development phase and is subject to change at any time.
 
