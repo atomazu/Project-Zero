@@ -20,5 +20,5 @@ func _on_switch_menu(nodepath, target_nodepath):
 	var target_node = get_node(target_nodepath)
 	target_node.show()
 	node.hide()
-	
-	print("UI-Event: ", node.name, " -> ", target_node.name)
+		
+	print("[UI-Event]: ", node.name, " -> ", target_node.name)
