@@ -1,15 +1,17 @@
 # Project Zero
 
-This project is a local multiplayer first-person shooter game that can be played with friends on the same network. It can also be played with Hamachi or similar services. Please note that the project is in an early development phase and is subject to change at any time.
+Project Zero is an upcoming locally-playable, multiplayer first-person shooter game that will be playable with friends on the same network or through services such as Hamachi. The focus of the game is to provide players with a fun, casual multiplayer experience that can be easily expanded upon.
 
 ## Game Philosophy
 
-The goal of this project is to provide a cool, casual multiplayer experience that is easily expandable. The focus is on simple and fast setup of the game so that players can concentrate on playing without having to worry about setting up servers and networks. As the game is still in development, the game philosophy and goals may change over time.
+The game philosophy behind Project Zero is to provide players with a simple, hassle-free setup process so that they can concentrate on the game itself without worrying about complicated server and network configurations. As the project is still in development, its philosophy and goals may evolve over time.
 
-## The Developer
+## Developer
 
-This project is being developed by a student who is interested in video games and programming. The developer aims to create their own multiplayer gaming experience and improve their programming skills. As the developer is still at the beginning of their programming career, the project may undergo changes and improvements in the future.
+Project Zero is being developed by a student who is passionate about video games and programming. The developer's goal is to create a unique multiplayer gaming experience and enhance their programming skills. As the project is still in the early stages of development, it may undergo further changes and improvements before release.
 
 ## Installation
 
-1. Download the newest .exe file from the release tab or... clone the repositry and build it yourself.
+Upon release, users will be able to download the latest .exe file from the release tab or alternatively clone the repository and build the game themselves.
+
+Please note that Project Zero is still in its early developmental phase and may undergo changes before release.
