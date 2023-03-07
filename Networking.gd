@@ -3,7 +3,7 @@ extends Node
 
 const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
-var Player = load("res://Player.tscn")
+var Player = load("res://player/Player.tscn")
 signal server_created
 
 
@@ -14,7 +14,7 @@ func _ready():
 
 # connections
 func _on_host_button_pressed():
-	print("Networking-Event: ", "Attempting to create server...")
+	print("[Networking-Event]: ", "Attempting to create server...")
 	var ip4 = get_ip4()
 	
 	enet_peer.create_server(PORT)
@@ -24,7 +24,7 @@ func _on_host_button_pressed():
 	multiplayer.peer_connected.connect(add_player)
 	multiplayer.peer_disconnected.connect(remove_player)
 	
-	print("Networking-Event: ", "Server created. \n", "Ip: %s \n" % ip4, "Port: %s" % PORT)
+	print("[Networking-Event]: ", "Server created. \n", "Ip: %s \n" % ip4, "Port: %s" % PORT)
 	
 	add_player(multiplayer.get_unique_id())
 	server_created.emit()
@@ -34,26 +34,26 @@ func _on_join_button_pressed():
 	var adress_entry = %CustomIp
 	var port_entry = %CustomPort
 	
-	print("Networking-Event: ", "Attempting to join server...")
+	print("[Networking-Event]: ", "Attempting to join server...")
 	
 	if adress_entry.text and port_entry.text:
 		enet_peer.create_client(adress_entry.text, port_entry.text)
 	elif adress_entry.text:
 		enet_peer.create_client(adress_entry.text, PORT)
 	elif port_entry.text:
-		print("Networking-Event: ", "Couldn't find server. Attempting to join localhost...")
+		print("[Networking-Event]: ", "Couldn't find server. Attempting to join localhost...")
 		enet_peer.create_client("localhost", port_entry.text)
 	else:
-		print("Networking-Event: ", "Couldn't find server. Attempting to join localhost...")
+		print("[Networking-Event]: ", "Couldn't find server. Attempting to join localhost...")
 		enet_peer.create_client("localhost", PORT)
 	
 	if enet_peer:
 		multiplayer.multiplayer_peer = enet_peer
-		print("Networking-Event: ", "Multiplayer peer assigned to enet_peer.")
+		print("[Networking-Event]: ", "Multiplayer peer assigned to enet_peer.")
 
 
 func on_multiplayer_connection_failed():
-	assert("Networking-Event: ", "Server Connection couldn't be established.")
+	assert("[Networking-Event]: ", "Server Connection couldn't be established.")
 
 
 func _on_exit_button_pressed():
@@ -75,13 +75,13 @@ func add_player(peer_id):
 	player.name = str(peer_id)
 	add_child(player)
 	
-	print("Networking-Event: ", "Player added succesfully.")
+	print("[Networking-Event]: ", "Player added succesfully.")
 
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
-		print("Networking-Event: ", "Player %s removed succesfully." %player.name)
+		print("[Networking-Event]: ", "Player %s removed succesfully." %player.name)
 		player.queue_free()
 	else:
-		print("Networking-Event: ", "Player couldn't be found and thus not be removed.")
+		print("[Networking-Event]: ", "Player couldn't be found and thus not be removed.")

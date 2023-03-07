@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfvc67t677w50"]
+[gd_scene load_steps=4 format=3 uid="uid://dfcdxk5y2nndb"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_viw3j"]
+[ext_resource type="Script" path="res://player/Player.gd" id="1_c8p5a"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3qcr6"]
 size = Vector3(1, 2, 1)
@@ -8,7 +8,7 @@ size = Vector3(1, 2, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8mdwm"]
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_viw3j")
+script = ExtResource("1_c8p5a")
 
 [node name="BodyCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_3qcr6")
