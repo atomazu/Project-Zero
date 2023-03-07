@@ -167,22 +167,23 @@ func save_settings():
 
 func load_settings():
 	var file = FileAccess.open("user://project_zero.save", FileAccess.READ)
-	var load_data = file.get_var()
+	if file:
+		var load_data = file.get_var()
 	
-	_on_resolution_button_item_selected(load_data["window_size"])
-	_on_antialiasing_button_item_selected(load_data["antialiasing_quality"])
-	_on_ssao_button_item_selected(load_data["ssao_quality"])
-	_on_bloom_button_item_selected(load_data["bloom_strength"])
-	_on_ss_reflection_button_item_selected(load_data["ss_reflection_quality"])
-	_on_window_mode_button_item_selected(load_data["window_mode"])
-	
-	$GridContainer/ResolutionButton.selected = load_data["window_size"]
-	$GridContainer/AntialiasingButton.selected = load_data["antialiasing_quality"]
-	$GridContainer/SSAOButton.selected = load_data["ssao_quality"]
-	$GridContainer/BloomButton.selected = load_data["bloom_strength"]
-	$GridContainer/SSReflectionButton.selected = load_data["ss_reflection_quality"]
-	$GridContainer/WindowModeButton.selected = load_data["window_mode"]
-	
-	print("[Settings-Event]: ", "Settings Loaded: ", load_data)
+		_on_resolution_button_item_selected(load_data["window_size"])
+		_on_antialiasing_button_item_selected(load_data["antialiasing_quality"])
+		_on_ssao_button_item_selected(load_data["ssao_quality"])
+		_on_bloom_button_item_selected(load_data["bloom_strength"])
+		_on_ss_reflection_button_item_selected(load_data["ss_reflection_quality"])
+		_on_window_mode_button_item_selected(load_data["window_mode"])
+		
+		$GridContainer/ResolutionButton.selected = load_data["window_size"]
+		$GridContainer/AntialiasingButton.selected = load_data["antialiasing_quality"]
+		$GridContainer/SSAOButton.selected = load_data["ssao_quality"]
+		$GridContainer/BloomButton.selected = load_data["bloom_strength"]
+		$GridContainer/SSReflectionButton.selected = load_data["ss_reflection_quality"]
+		$GridContainer/WindowModeButton.selected = load_data["window_mode"]
+		
+		print("[Settings-Event]: ", "Settings Loaded: ", load_data)
 	
 	_on_apply_button_pressed()
