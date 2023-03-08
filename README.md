@@ -5,7 +5,7 @@ Project Zero is a fun and relaxed, locally-playable, multiplayer first-person sh
 
 The project is named Project Zero because it's my first serious project and.. it sounded cool. 😜
 
-# I'm always open to your ideas and feedback as I develop this game. Let's make this game awesome together!
+## I'm always open to your ideas and feedback as I develop this game. Let's make this game awesome together!
 
 # 🚀 Installation
 When a new Project Zero build comes out, you'll be able to download the latest .exe file from the release tab or clone the repository and build the game yourself.
