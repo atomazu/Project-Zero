@@ -141,14 +141,6 @@ func _on_apply_button_pressed():
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	
 	save_settings()
-	
-#debug
-	print("[Settings-Event]: ", "antialiasing_quality: %s" %str(antialiasing_quality))
-	print("[Graphics-Event]: ", "ssao_quality: %s" %str(ssao_quality))
-	print("[Settings-Event]: ", "bloom_strength: %s" %str(bloom_strength))
-	print("[Settings-Event]: ", "ss_reflection_quality: %s" %str(ss_reflection_quality))
-	print("[Settings-Event]: ", "window_size: %s" %str(window_size))
-	print("[Settings-Event]: ", "window_mode: %s" %str(window_mode))
 
 
 func save_settings():
@@ -158,11 +150,24 @@ func save_settings():
 		"ssao_quality": $GridContainer/SSAOButton.selected,
 		"bloom_strength": $GridContainer/BloomButton.selected,
 		"ss_reflection_quality": $GridContainer/SSReflectionButton.selected,
-		"window_mode": $GridContainer/WindowModeButton.selected
+		"window_mode": $GridContainer/WindowModeButton.selected,
+		
+		"username": "Unnamed"
 	}
 	
-	var file = FileAccess.open("user://project_zero.save", FileAccess.WRITE)
-	file.store_var(save_data)
+	var file = FileAccess.open("user://project_zero.save", FileAccess.READ_WRITE)
+	if save_data != file.get_var():
+		print("---------------------------------------\n",
+			"[Settings-Event]: ", "Settings Saved.\n",
+			"---------------------------------------\n",
+			"[Settings-Event]: ", "antialiasing_quality: %s\n" %str(antialiasing_quality),
+			"[Graphics-Event]: ", "ssao_quality: %s\n" %str(ssao_quality),
+			"[Settings-Event]: ", "bloom_strength: %s\n" %str(bloom_strength),
+			"[Settings-Event]: ", "ss_reflection_quality: %s\n" %str(ss_reflection_quality),
+			"[Settings-Event]: ", "window_size: %s\n" %str(window_size),
+			"[Settings-Event]: ", "window_mode: %s\n" %str(window_mode),
+			"---------------------------------------")
+		file.store_var(save_data)
 
 
 func load_settings():
@@ -184,6 +189,24 @@ func load_settings():
 		$GridContainer/SSReflectionButton.selected = load_data["ss_reflection_quality"]
 		$GridContainer/WindowModeButton.selected = load_data["window_mode"]
 		
-		print("[Settings-Event]: ", "Settings Loaded: ", load_data)
+		print("---------------------------------------\n",
+			"[Settings-Event]: ", "Settings Loaded.\n",
+			"---------------------------------------\n",
+			"[Settings-Event]: ", "antialiasing_quality: %s\n" %str(antialiasing_quality),
+			"[Graphics-Event]: ", "ssao_quality: %s\n" %str(ssao_quality),
+			"[Settings-Event]: ", "bloom_strength: %s\n" %str(bloom_strength),
+			"[Settings-Event]: ", "ss_reflection_quality: %s\n" %str(ss_reflection_quality),
+			"[Settings-Event]: ", "window_size: %s\n" %str(window_size),
+			"[Settings-Event]: ", "window_mode: %s\n" %str(window_mode),
+			"---------------------------------------")
 	
 	_on_apply_button_pressed()
+
+
+func _on_reset_button_pressed():
+		$GridContainer/ResolutionButton.selected = 0
+		$GridContainer/AntialiasingButton.selected = 0
+		$GridContainer/SSAOButton.selected = 0
+		$GridContainer/BloomButton.selected = 0
+		$GridContainer/SSReflectionButton.selected = 0
+		$GridContainer/WindowModeButton.selected = 0

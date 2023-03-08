@@ -17,6 +17,7 @@ shape = SubResource("BoxShape3D_3qcr6")
 mesh = SubResource("CapsuleMesh_8mdwm")
 
 [node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Pivot"]
 current = true

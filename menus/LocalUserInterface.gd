@@ -22,3 +22,7 @@ func _on_switch_menu(nodepath, target_nodepath):
 	node.hide()
 		
 	print("[UI-Event]: ", node.name, " -> ", target_node.name)
+
+
+func _on_exit_button_pressed():
+	get_tree().quit()

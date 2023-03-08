@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cfkjh4yc0suw5"]
+
+[node name="LobbyPeer" type="PanelContainer"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PeerInfo" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="YouIndicator" type="Label" parent="MarginContainer/HBoxContainer/PeerInfo"]
+custom_minimum_size = Vector2(41, 31)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 10
+text = "(you)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PeerId" type="Label" parent="MarginContainer/HBoxContainer/PeerInfo"]
+layout_mode = 2
+text = "[id: 0]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AuthorityLevel" type="Label" parent="MarginContainer/HBoxContainer/PeerInfo"]
+custom_minimum_size = Vector2(41, 26)
+layout_mode = 2
+text = "Host:"
+vertical_alignment = 1
+
+[node name="Username" type="Label" parent="MarginContainer/HBoxContainer/PeerInfo"]
+custom_minimum_size = Vector2(80, 26)
+layout_mode = 2
+text = "Username"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HostActions" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/HostActions"]
+layout_mode = 2
+text = "Actions:"
+vertical_alignment = 1
+
+[node name="PromoteButton" type="Button" parent="MarginContainer/HBoxContainer/HostActions"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Promote"
+
+[node name="KickButton" type="Button" parent="MarginContainer/HBoxContainer/HostActions"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Kick"
+
+[node name="BanButton" type="Button" parent="MarginContainer/HBoxContainer/HostActions"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Ban"
+
+[node name="ReadyStatus" type="Label" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "[not ready]"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -14,6 +14,7 @@ func _ready():
 
 # connections
 func _on_host_button_pressed():
+	print("---------------------------------------")
 	print("[Networking-Event]: ", "Attempting to create server...")
 	var ip4 = get_ip4()
 	
@@ -21,12 +22,15 @@ func _on_host_button_pressed():
 	enet_peer.set_bind_ip(ip4)
 	
 	multiplayer.multiplayer_peer = enet_peer
-	multiplayer.peer_connected.connect(add_player)
-	multiplayer.peer_disconnected.connect(remove_player)
+	#multiplayer.peer_connected.connect(player_jon)
+	#multiplayer.peer_disconnected.connect(player_disconnect)
 	
-	print("[Networking-Event]: ", "Server created. \n", "Ip: %s \n" % ip4, "Port: %s" % PORT)
+	print("[Networking-Event]: ", "Server created.\n",
+		"[Networking-Event]: ","Ip: %s\n" % ip4,
+		"[Networking-Event]: ","Port: %s\n" % PORT,
+		"---------------------------------------")
 	
-	add_player(multiplayer.get_unique_id())
+	#add_player(multiplayer.get_unique_id())
 	server_created.emit()
 
 
@@ -50,6 +54,7 @@ func _on_join_button_pressed():
 	if enet_peer:
 		multiplayer.multiplayer_peer = enet_peer
 		print("[Networking-Event]: ", "Multiplayer peer assigned to enet_peer.")
+	
 
 
 func on_multiplayer_connection_failed():
@@ -70,7 +75,7 @@ func get_ip4():
 	return ip
 
 
-func add_player(peer_id):
+func add_player_instance(peer_id):
 	var player = Player.instantiate()
 	player.name = str(peer_id)
 	add_child(player)
@@ -78,10 +83,14 @@ func add_player(peer_id):
 	print("[Networking-Event]: ", "Player added succesfully.")
 
 
-func remove_player(peer_id):
+func remove_player_instance(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		print("[Networking-Event]: ", "Player %s removed succesfully." %player.name)
 		player.queue_free()
 	else:
 		print("[Networking-Event]: ", "Player couldn't be found and thus not be removed.")
+
+
+func _on_leave_lobby_button_pressed():
+	pass # Replace with function body.
