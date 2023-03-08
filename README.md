@@ -2,9 +2,9 @@
 
 Welcome to Project Zero, my personal project! I'm a student who's passionate about programming and video games, and I'm excited to work on my first serious project. As a long-time hobbyist, I've gained some experience, but I'm looking forward to creating something more serious now.
 
-Project Zero is a fun and relaxed, locally-playable, multiplayer first-person shooter game that you can play with your friends on the same network or through services like Hamachi. I believe in keeping things simple and hassle-free, so you can focus on playing the game without any complicated server or network configurations.
+Project Zero is a fun and relaxed, locally-playable, multiplayer first-person shooter game that you can play with your friends on the same network or through services like Hamachi. I believe in keeping things simple and easy to build upon, I can't wait to play this with people that I know when it has its first working release!
 
-The name Project Zero comes from my love of starting from scratch and building up from nothing. I believe that every project starts at zero, and with hard work and dedication, we can build something great together.
+The project is named Project Zero because it's my first serious project and.. it sounded cool. :P
 
 I'm always open to your ideas and feedback as I develop this game. Let's make this game awesome together! 
 
