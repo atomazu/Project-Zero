@@ -45,6 +45,7 @@ func _on_ssao_button_item_selected(index):
 	elif index == 2:
 		ssao_quality = "MEDIUM"
 
+
 func _on_bloom_button_item_selected(index):
 	if index == 0:
 		bloom_strength = "OFF"
@@ -74,7 +75,7 @@ func _on_window_mode_button_item_selected(index):
 		window_mode = "FULLSCREEN"
 
 
-func _on_apply_button_pressed():
+func _on_apply_button_pressed(save = true):
 	#Resolution
 	DisplayServer.window_set_size(window_size)
 	DisplayServer.window_set_position((DisplayServer.screen_get_size() - DisplayServer.window_get_size()) * 0.5)
@@ -140,7 +141,8 @@ func _on_apply_button_pressed():
 		"FULLSCREEN":
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	
-	save_settings()
+	if save:
+		save_settings()
 
 
 func save_settings():
@@ -150,24 +152,22 @@ func save_settings():
 		"ssao_quality": $GridContainer/SSAOButton.selected,
 		"bloom_strength": $GridContainer/BloomButton.selected,
 		"ss_reflection_quality": $GridContainer/SSReflectionButton.selected,
-		"window_mode": $GridContainer/WindowModeButton.selected,
-		
-		"username": "Unnamed"
+		"window_mode": $GridContainer/WindowModeButton.selected
 	}
 	
-	var file = FileAccess.open("user://project_zero.save", FileAccess.READ_WRITE)
-	if save_data != file.get_var():
-		print("---------------------------------------\n",
-			"[Settings-Event]: ", "Settings Saved.\n",
-			"---------------------------------------\n",
-			"[Settings-Event]: ", "antialiasing_quality: %s\n" %str(antialiasing_quality),
-			"[Graphics-Event]: ", "ssao_quality: %s\n" %str(ssao_quality),
-			"[Settings-Event]: ", "bloom_strength: %s\n" %str(bloom_strength),
-			"[Settings-Event]: ", "ss_reflection_quality: %s\n" %str(ss_reflection_quality),
-			"[Settings-Event]: ", "window_size: %s\n" %str(window_size),
-			"[Settings-Event]: ", "window_mode: %s\n" %str(window_mode),
-			"---------------------------------------")
-		file.store_var(save_data)
+	var file = FileAccess.open("user://project_zero.save", FileAccess.WRITE)
+	
+	print("---------------------------------------\n",
+		"[Settings-Event]: ", "Settings Saved.\n",
+		"---------------------------------------\n",
+		"[Settings-Event]: ", "antialiasing_quality: %s\n" %str(antialiasing_quality),
+		"[Graphics-Event]: ", "ssao_quality: %s\n" %str(ssao_quality),
+		"[Settings-Event]: ", "bloom_strength: %s\n" %str(bloom_strength),
+		"[Settings-Event]: ", "ss_reflection_quality: %s\n" %str(ss_reflection_quality),
+		"[Settings-Event]: ", "window_size: %s\n" %str(window_size),
+		"[Settings-Event]: ", "window_mode: %s\n" %str(window_mode),
+		"---------------------------------------")
+	file.store_var(save_data)
 
 
 func load_settings():
@@ -200,7 +200,7 @@ func load_settings():
 			"[Settings-Event]: ", "window_mode: %s\n" %str(window_mode),
 			"---------------------------------------")
 	
-	_on_apply_button_pressed()
+	_on_apply_button_pressed(false)
 
 
 func _on_reset_button_pressed():

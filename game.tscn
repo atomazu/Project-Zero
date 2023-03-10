@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://oa7655nf6exj"]
+[gd_scene load_steps=11 format=3 uid="uid://dtp3xeg0suv8u"]
 
 [ext_resource type="Script" path="res://menus/LocalUserInterface.gd" id="1_8c7gk"]
 [ext_resource type="Texture2D" uid="uid://byyyuh104x4sm" path="res://menus/github.jpg" id="1_ftdv0"]
-[ext_resource type="Script" path="res://New_Networking.gd" id="4_mut3k"]
-[ext_resource type="Script" path="res://GraphicsSettings.gd" id="4_qcco8"]
+[ext_resource type="Script" path="res://server/Server.gd" id="3_ricxf"]
+[ext_resource type="Script" path="res://server/Client.gd" id="4_nojqd"]
+[ext_resource type="Script" path="res://menus/GraphicsSettings.gd" id="4_vucw0"]
+[ext_resource type="Script" path="res://menus/error_popup.gd" id="6_an4qo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ooelr"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,6 +17,9 @@ sky_material = SubResource("ProceduralSkyMaterial_ooelr")
 [sub_resource type="Environment" id="Environment_yrbh5"]
 background_mode = 2
 sky = SubResource("Sky_5bmbi")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2tse"]
+bg_color = Color(0.243137, 0.243137, 0.243137, 1)
 
 [node name="Game" type="Node"]
 
@@ -31,9 +36,10 @@ environment = SubResource("Environment_yrbh5")
 [node name="Map" type="Node3D" parent="World"]
 
 [node name="LocalUserInterface" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_8c7gk")
 
-[node name="Titel" type="Label" parent="LocalUserInterface"]
+[node name="ProjectZeroTitle" type="Label" parent="LocalUserInterface"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -41,10 +47,13 @@ offset_top = 35.0
 offset_bottom = -636.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 30
 text = "Project Zero"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="MainMenu" type="Control" parent="LocalUserInterface"]
 unique_name_in_owner = true
@@ -62,6 +71,7 @@ offset_bottom = 237.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="MainPanel" type="PanelContainer" parent="LocalUserInterface/MainMenu"]
 custom_minimum_size = Vector2(300, 475)
@@ -97,23 +107,33 @@ vertical_alignment = 1
 
 [node name="HostButton" type="Button" parent="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Host a game!"
 
 [node name="JoinButton" type="Button" parent="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Join a game!"
 
 [node name="SettingsButton" type="Button" parent="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Settings"
 
 [node name="ExitToMenuButton" type="Button" parent="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Exit to Main Menu"
 
 [node name="ExitButton" type="Button" parent="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Exit to desktop"
 
 [node name="LinkDescription" type="Label" parent="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer"]
@@ -156,6 +176,7 @@ offset_right = 250.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_ricxf")
 
 [node name="MainPanel" type="PanelContainer" parent="LocalUserInterface/HostingInterface"]
 custom_minimum_size = Vector2(500, 300)
@@ -191,10 +212,12 @@ vertical_alignment = 1
 
 [node name="CustomIp" type="LineEdit" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 placeholder_text = "custom ip (optional, default: your ip4)"
 
 [node name="CustomPort" type="LineEdit" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 placeholder_text = "custom port (optional, default: 9999)"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
@@ -203,6 +226,8 @@ layout_mode = 2
 [node name="PortForwardingToggle" type="CheckButton" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 text = "Use Port-Forwarding"
 alignment = 2
@@ -210,6 +235,8 @@ alignment = 2
 [node name="UPnPToggle" type="CheckButton" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 text = "Use UPnP"
 alignment = 2
@@ -217,15 +244,21 @@ alignment = 2
 [node name="TutorialButton" type="Button" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 text = "How to host"
 
 [node name="HostButton" type="Button" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Host"
 
 [node name="CancelButton" type="Button" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Cancel"
 
 [node name="Hint" type="Label" parent="LocalUserInterface/HostingInterface/MainPanel"]
@@ -253,6 +286,7 @@ offset_right = 250.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_nojqd")
 
 [node name="MainPanel" type="PanelContainer" parent="LocalUserInterface/JoiningInterface"]
 custom_minimum_size = Vector2(500, 300)
@@ -289,11 +323,13 @@ vertical_alignment = 1
 [node name="CustomIp" type="LineEdit" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
 placeholder_text = "host ip4 (needed)"
 
 [node name="CustomPort" type="LineEdit" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
 placeholder_text = "username (not needed)"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
@@ -302,6 +338,7 @@ layout_mode = 2
 [node name="PortForwardingToggle" type="CheckButton" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 disabled = true
 text = "Uses Port-Forwarding"
 alignment = 2
@@ -309,6 +346,8 @@ alignment = 2
 [node name="UPnPToggle" type="CheckButton" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 disabled = true
 text = "Uses UPnP"
 alignment = 2
@@ -316,14 +355,20 @@ alignment = 2
 [node name="TutorialButton" type="Button" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "How to join"
 
 [node name="JoinButton" type="Button" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Join"
 
 [node name="CancelButton" type="Button" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Cancel"
 
 [node name="Hint" type="Label" parent="LocalUserInterface/JoiningInterface/MainPanel"]
@@ -413,11 +458,14 @@ vertical_alignment = 1
 
 [node name="LineEdit" type="LineEdit" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/_Keybindings"]
 layout_mode = 2
+focus_mode = 0
 placeholder_text = "KEY HERE"
 alignment = 1
 
 [node name="FullScreenButton" type="Button" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/_Keybindings"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Save"
 
 [node name="Hint" type="Label" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/_Keybindings"]
@@ -433,7 +481,7 @@ vertical_alignment = 1
 [node name="GraphicsSettings" type="VBoxContainer" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("4_qcco8")
+script = ExtResource("4_vucw0")
 
 [node name="Header" type="Label" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings"]
 layout_mode = 2
@@ -460,6 +508,8 @@ text = "Resolution:"
 
 [node name="ResolutionButton" type="OptionButton" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 alignment = 1
 item_count = 4
 selected = 0
@@ -478,6 +528,8 @@ text = "Antialiasing:"
 
 [node name="AntialiasingButton" type="OptionButton" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 alignment = 1
 item_count = 5
 selected = 0
@@ -498,6 +550,8 @@ text = "SSAO Quality:"
 
 [node name="SSAOButton" type="OptionButton" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 alignment = 1
 item_count = 3
 selected = 0
@@ -514,6 +568,8 @@ text = "Bloom Quality:"
 
 [node name="BloomButton" type="OptionButton" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 alignment = 1
 item_count = 3
 selected = 0
@@ -530,6 +586,8 @@ text = "SS Reflection:"
 
 [node name="SSReflectionButton" type="OptionButton" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 alignment = 1
 item_count = 5
 selected = 0
@@ -550,6 +608,8 @@ text = "Window Mode:"
 
 [node name="WindowModeButton" type="OptionButton" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer"]
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 alignment = 1
 item_count = 2
 selected = 0
@@ -565,16 +625,22 @@ size_flags_vertical = 10
 [node name="CancelButton" type="Button" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsControls"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Back"
 
 [node name="ApplyButton" type="Button" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsControls"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Apply and save"
 
 [node name="ResetButton" type="Button" parent="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsControls"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Reset to default"
 
 [node name="Lobby" type="Control" parent="LocalUserInterface"]
@@ -630,12 +696,15 @@ layout_mode = 2
 layout_mode = 2
 text = "Connected Peers:"
 
-[node name="Button" type="Button" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="ConfigureButton" type="Button" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
+focus_mode = 0
+mouse_default_cursor_shape = 2
+disabled = true
 text = "Configure Server"
 
-[node name="PeerList" type="VBoxContainer" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer"]
+[node name="PeerBox" type="VBoxContainer" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -647,19 +716,27 @@ layout_mode = 2
 size_flags_vertical = 10
 theme_override_constants/separation = 5
 
-[node name="LeaveLobbyButton" type="Button" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls"]
+[node name="LeaveButton" type="Button" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
 text = "Leave to Main Menu"
 
-[node name="StartGameButton" type="Button" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls"]
+[node name="StartButton" type="Button" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+disabled = true
 text = "Start Game"
 
 [node name="ReadyButton" type="Button" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
 text = "Ready to play"
 
 [node name="SidePanel" type="PanelContainer" parent="LocalUserInterface/Lobby"]
@@ -672,18 +749,118 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Networking" type="Node" parent="."]
-script = ExtResource("4_mut3k")
+[node name="ErrorPopUp" type="Control" parent="LocalUserInterface"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -100.0
+offset_right = 170.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_an4qo")
 
+[node name="PanelContainer" type="PanelContainer" parent="LocalUserInterface/ErrorPopUp"]
+custom_minimum_size = Vector2(340, 220)
+layout_mode = 2
+offset_right = 340.0
+offset_bottom = 220.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a2tse")
+
+[node name="MarginContainer" type="MarginContainer" parent="LocalUserInterface/ErrorPopUp/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LocalUserInterface/ErrorPopUp/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="LocalUserInterface/ErrorPopUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="LocalUserInterface/ErrorPopUp/PanelContainer/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Header"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="LocalUserInterface/ErrorPopUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+text = "This is a description"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="LocalUserInterface/ErrorPopUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "OK"
+
+[node name="DebugPopUp" type="Control" parent="LocalUserInterface"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+size_flags_vertical = 3
+script = ExtResource("6_an4qo")
+
+[node name="PanelContainer" type="PanelContainer" parent="LocalUserInterface/DebugPopUp"]
+custom_minimum_size = Vector2(340, 220)
+layout_mode = 2
+offset_right = 340.0
+offset_bottom = 220.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a2tse")
+
+[node name="MarginContainer" type="MarginContainer" parent="LocalUserInterface/DebugPopUp/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LocalUserInterface/DebugPopUp/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="LocalUserInterface/DebugPopUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="LocalUserInterface/DebugPopUp/PanelContainer/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Header"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DictLabel" type="Label" parent="LocalUserInterface/DebugPopUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+text = "dict:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="LocalUserInterface/DebugPopUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+text = "value"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="LocalUserInterface/DebugPopUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "OK"
+
+[connection signal="_on_client_leave" from="LocalUserInterface" to="LocalUserInterface/JoiningInterface" method="_on_client_leave"]
+[connection signal="_on_close_server" from="LocalUserInterface" to="LocalUserInterface/HostingInterface" method="_on_close_server"]
+[connection signal="_on_create_client" from="LocalUserInterface" to="LocalUserInterface/JoiningInterface" method="_on_create_client"]
+[connection signal="_on_create_server" from="LocalUserInterface" to="LocalUserInterface/HostingInterface" method="_on_create_server"]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/HostButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%MainMenu", "%HostingInterface"]]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/JoinButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%MainMenu", "%JoiningInterface"]]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/SettingsButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%MainMenu", "%Settings"]]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/ExitButton" to="LocalUserInterface" method="_on_exit_button_pressed"]
-[connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/HostButton" to="Networking" method="_on_host_button_pressed"]
-[connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/HostButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%HostingInterface", "%Lobby"]]
-[connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/CancelButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%HostingInterface", "%MainMenu"]]
-[connection signal="pressed" from="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/JoinButton" to="Networking" method="_on_join_button_pressed"]
-[connection signal="pressed" from="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/JoinButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%JoiningInterface", "%Lobby"]]
+[connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/HostButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%HostingInterface", "%Lobby", "create_server"]]
+[connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/CancelButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%HostingPanel", "%MainMenu"]]
+[connection signal="pressed" from="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/JoinButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%JoiningInterface", "%Lobby", "create_client"]]
 [connection signal="pressed" from="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/CancelButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%JoiningInterface", "%MainMenu"]]
 [connection signal="item_selected" from="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer/ResolutionButton" to="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings" method="_on_resolution_button_item_selected"]
 [connection signal="item_selected" from="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer/AntialiasingButton" to="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings" method="_on_antialiasing_button_item_selected"]
@@ -694,5 +871,6 @@ script = ExtResource("4_mut3k")
 [connection signal="pressed" from="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsControls/CancelButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%Settings", "%MainMenu"]]
 [connection signal="pressed" from="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsControls/ApplyButton" to="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings" method="_on_apply_button_pressed"]
 [connection signal="pressed" from="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsControls/ResetButton" to="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings" method="_on_reset_button_pressed"]
-[connection signal="pressed" from="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls/LeaveLobbyButton" to="Networking" method="_on_leave_lobby_button_pressed"]
-[connection signal="pressed" from="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls/LeaveLobbyButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%Lobby", "%MainMenu"]]
+[connection signal="pressed" from="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer/LobbyControls/LeaveButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%Lobby", "%MainMenu", "lobby_leave"]]
+[connection signal="pressed" from="LocalUserInterface/ErrorPopUp/PanelContainer/MarginContainer/VBoxContainer/Button" to="LocalUserInterface/ErrorPopUp" method="_on_button_pressed" flags=18]
+[connection signal="pressed" from="LocalUserInterface/DebugPopUp/PanelContainer/MarginContainer/VBoxContainer/Button" to="LocalUserInterface/DebugPopUp" method="_on_button_pressed" flags=18]
