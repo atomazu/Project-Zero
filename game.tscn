@@ -210,15 +210,15 @@ text = "Hosting Interface"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CustomIp" type="LineEdit" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
+[node name="MaxPlayers" type="LineEdit" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-focus_mode = 0
-placeholder_text = "custom ip (optional, default: your ip4)"
+focus_mode = 1
+placeholder_text = "Enter Max Players here"
 
 [node name="CustomPort" type="LineEdit" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-focus_mode = 0
-placeholder_text = "custom port (optional, default: 9999)"
+focus_mode = 1
+placeholder_text = "Enter Port Here"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -321,16 +321,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CustomIp" type="LineEdit" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
-focus_mode = 0
-placeholder_text = "host ip4 (needed)"
+focus_mode = 1
+placeholder_text = "Enter IP here"
 
 [node name="CustomPort" type="LineEdit" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
-focus_mode = 0
-placeholder_text = "username (not needed)"
+focus_mode = 1
+placeholder_text = "Enter Port Here"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -859,7 +857,7 @@ text = "OK"
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/SettingsButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%MainMenu", "%Settings"]]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/ExitButton" to="LocalUserInterface" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/HostButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%HostingInterface", "%Lobby", "create_server"]]
-[connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/CancelButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%HostingPanel", "%MainMenu"]]
+[connection signal="pressed" from="LocalUserInterface/HostingInterface/MainPanel/MarginContainer/VBoxContainer/CancelButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%HostingInterface", "%MainMenu"]]
 [connection signal="pressed" from="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/JoinButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%JoiningInterface", "%Lobby", "create_client"]]
 [connection signal="pressed" from="LocalUserInterface/JoiningInterface/MainPanel/MarginContainer/VBoxContainer/CancelButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%JoiningInterface", "%MainMenu"]]
 [connection signal="item_selected" from="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings/GridContainer/ResolutionButton" to="LocalUserInterface/Settings/MainPanel/MarginContainer/VBoxContainer/SettingsGrid/GraphicsSettings" method="_on_resolution_button_item_selected"]

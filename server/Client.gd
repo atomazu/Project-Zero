@@ -5,16 +5,21 @@ var peer_id = 0
 var peer_list = {}
 @onready var peer_box = %PeerBox
 @onready var lobby_peer = preload("res://scenes/lobby_peer.tscn")
-
+@onready var custom_port = $MainPanel/MarginContainer/VBoxContainer/CustomPort
+@onready var custom_ip = $MainPanel/MarginContainer/VBoxContainer/CustomIp
 
 func _on_create_client():
 	var enet_peer = ENetMultiplayerPeer.new()
-	enet_peer.create_client("localhost" ,9999)
+	if custom_port.text:
+		enet_peer.create_client(str(custom_ip.text), int(custom_port.text))
+	else:
+		enet_peer.create_client(str(custom_ip.text), 9999)
 	multiplayer.multiplayer_peer = enet_peer
 	peer_id = enet_peer.get_unique_id()
 	Global.set_up_network_signals(self)
 	
 	print("[Networking-Event]: ", "Client created with id: %s." %peer_id)
+	print("[Networking-Event]: Custom Ip: %s, Port: " %str(custom_ip.text), str(custom_port.text))
 
 
 func _peer_connected(id):
@@ -30,6 +35,7 @@ func _peer_disconnected(id):
 func _on_connected_to_server():
 	print("[Client: %s]: "  %peer_id, "Connected to server.")
 	Global.add_peer(peer_id, peer_box, lobby_peer, peer_list)
+	%HostingInterface.sync_client()
 
 
 func _on_connection_failed():
@@ -44,7 +50,6 @@ func _server_disconnected():
 	print("[Networking-Event]: ", "Server disconnected.")
 	_on_client_leave()
 	%LocalUserInterface._on_switch_menu("%Lobby", "%MainMenu")
-	Global.display_error("Server disconnected.", "Host closed the game or had a disconnect.", %ErrorPopUp)
 
 
 @rpc("authority", "call_remote")
