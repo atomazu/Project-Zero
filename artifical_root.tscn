@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c671eln5huccg"]
-
-[ext_resource type="PackedScene" uid="uid://dtp3xeg0suv8u" path="res://game.tscn" id="1_kf5ch"]
-
-[node name="ArtificalRoot" type="Node"]
-
-[node name="Game" parent="." instance=ExtResource("1_kf5ch")]

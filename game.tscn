@@ -1,11 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://dtp3xeg0suv8u"]
+[gd_scene load_steps=13 format=3 uid="uid://wqy0whanxiw6"]
 
 [ext_resource type="Script" path="res://menus/LocalUserInterface.gd" id="1_8c7gk"]
 [ext_resource type="Texture2D" uid="uid://byyyuh104x4sm" path="res://menus/github.jpg" id="1_ftdv0"]
-[ext_resource type="Script" path="res://server/Server.gd" id="3_ricxf"]
-[ext_resource type="Script" path="res://server/Client.gd" id="4_nojqd"]
+[ext_resource type="Script" path="res://deprectated/deprecated_Server.gd" id="3_srtbj"]
+[ext_resource type="Script" path="res://deprectated/deprecated_Client.gd" id="4_4m1kx"]
 [ext_resource type="Script" path="res://menus/GraphicsSettings.gd" id="4_vucw0"]
 [ext_resource type="Script" path="res://menus/error_popup.gd" id="6_an4qo"]
+[ext_resource type="Script" path="res://Lobby.gd" id="6_kn3oy"]
+[ext_resource type="PackedScene" uid="uid://dj6ssbpexa5ty" path="res://peer_box.tscn" id="7_rltiq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ooelr"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -53,7 +55,6 @@ theme_override_font_sizes/font_size = 30
 text = "Project Zero"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="MainMenu" type="Control" parent="LocalUserInterface"]
 unique_name_in_owner = true
@@ -71,7 +72,6 @@ offset_bottom = 237.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="MainPanel" type="PanelContainer" parent="LocalUserInterface/MainMenu"]
 custom_minimum_size = Vector2(300, 475)
@@ -176,7 +176,7 @@ offset_right = 250.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_ricxf")
+script = ExtResource("3_srtbj")
 
 [node name="MainPanel" type="PanelContainer" parent="LocalUserInterface/HostingInterface"]
 custom_minimum_size = Vector2(500, 300)
@@ -286,7 +286,7 @@ offset_right = 250.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_nojqd")
+script = ExtResource("4_4m1kx")
 
 [node name="MainPanel" type="PanelContainer" parent="LocalUserInterface/JoiningInterface"]
 custom_minimum_size = Vector2(500, 300)
@@ -658,6 +658,7 @@ offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+script = ExtResource("6_kn3oy")
 
 [node name="MainPanel" type="PanelContainer" parent="LocalUserInterface/Lobby"]
 custom_minimum_size = Vector2(700, 500)
@@ -702,12 +703,9 @@ mouse_default_cursor_shape = 2
 disabled = true
 text = "Configure Server"
 
-[node name="PeerBox" type="VBoxContainer" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer"]
+[node name="PeerBox" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer" instance=ExtResource("7_rltiq")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 15
 
 [node name="LobbyControls" type="HBoxContainer" parent="LocalUserInterface/Lobby/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -848,10 +846,6 @@ vertical_alignment = 1
 layout_mode = 2
 text = "OK"
 
-[connection signal="_on_client_leave" from="LocalUserInterface" to="LocalUserInterface/JoiningInterface" method="_on_client_leave"]
-[connection signal="_on_close_server" from="LocalUserInterface" to="LocalUserInterface/HostingInterface" method="_on_close_server"]
-[connection signal="_on_create_client" from="LocalUserInterface" to="LocalUserInterface/JoiningInterface" method="_on_create_client"]
-[connection signal="_on_create_server" from="LocalUserInterface" to="LocalUserInterface/HostingInterface" method="_on_create_server"]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/HostButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%MainMenu", "%HostingInterface"]]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/JoinButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%MainMenu", "%JoiningInterface"]]
 [connection signal="pressed" from="LocalUserInterface/MainMenu/MainPanel/MarginContainer/VBoxContainer/SettingsButton" to="LocalUserInterface" method="_on_switch_menu" binds= ["%MainMenu", "%Settings"]]

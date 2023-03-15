@@ -34,7 +34,7 @@ vertical_alignment = 1
 [node name="AuthorityLevel" type="Label" parent="MarginContainer/HBoxContainer/PeerInfo"]
 custom_minimum_size = Vector2(41, 26)
 layout_mode = 2
-text = "Host:"
+text = "Name:"
 vertical_alignment = 1
 
 [node name="Username" type="Label" parent="MarginContainer/HBoxContainer/PeerInfo"]

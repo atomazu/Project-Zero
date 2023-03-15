@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dj6ssbpexa5ty"]
+
+[node name="PeerBox" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15

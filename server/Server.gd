@@ -1,77 +1,63 @@
 extends Node
+class_name Server
 
-
-var peer_id = 0
-var peer_list = {}
-@onready var peer_box = %PeerBox
+@onready var game = get_tree().get_root().get_child(1)
+@onready var lobby = game.get_node("%Lobby")
+@onready var peer_box = game.get_node("%PeerBox")
 @onready var lobby_peer = preload("res://scenes/lobby_peer.tscn")
-@onready var custom_port = $MainPanel/MarginContainer/VBoxContainer/CustomPort
-@onready var max_players = $MainPanel/MarginContainer/VBoxContainer/MaxPlayers
 
 
-func _on_create_server():
-	var enet_peer = ENetMultiplayerPeer.new()
-	if custom_port:
-		enet_peer.create_server(int(custom_port.text), 16)
+var enet_peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
+var port : int = 9999
+var max_clients = 8
+var client_list = {}
+
+var username = "Server"
+var peer_id = 1
+var last_connected = 1
+
+
+func start():
+	enet_peer.create_server(port, max_clients)
 	multiplayer.multiplayer_peer = enet_peer
-	peer_id = enet_peer.get_unique_id()
 	Global.set_up_network_signals(self)
 	
-	print("[Networking-Event]: ", "Server created.")
-	print("[Networking-Event]: With Max Players: %s, Port: " %str(max_players.text), ", ", str(custom_port.text))
-	Global.add_peer(peer_id, peer_box, lobby_peer, peer_list)
+	print("[Server]: ", "Server started.")
+	
+	client_list[peer_id] = {"username": username, "ready": false}
+	Global.add_peer_to_lobby_box(client_list, peer_id)
+
+
+func close():
+	multiplayer.multiplayer_peer.close()
+	print("[Server]: ", "reloaded scene.")
+	Global.reload_game()
 
 
 func _peer_connected(id):
-	print("[Client: %s]: "  %id, "Connected.")
-	Global.add_peer(id, peer_box, lobby_peer, peer_list)
-	sync_clients()
+	print("[Server]: ", id, " connected.")
+	client_list[id] = {"username": "unnamed", "ready": false}
+	Global.snyc_peer_list(client_list, id)
+	last_connected = id
 
 
 func _peer_disconnected(id):
-	print("[Client: %s]: "  %id, "Disconnected.")
-	Global.remove_peer(id, peer_box, peer_list)
-	sync_clients()
+	print("[Server]: ", id, " disconnected.")
+	client_list.erase(id)
+	Global.remove_peer(id)
 
 
 func _on_connected_to_server():
-	print("[Networking-Event]: ", "Connected to server.")
-	sync_clients()
+	pass
 
 
 func _on_connection_failed():
-	print("[Networking-Event]: ", "Failed to connect to server.")
+	pass
 
 
 func _connection_failed():
-	print("[Networking-Event]: ", "Failed to connect.")
+	pass
 
 
 func _server_disconnected():
-	print("[Networking-Event]: ", "Server disconnected.")
-	for peer in peer_list:
-		Global.remove_peer(peer, peer_box, peer_list)
-
-
-@rpc("any_peer")
-func sync_clients():
-	if peer_list.size() > 1:
-		rpc("sync_client", peer_list)
-		print("[Server]: ", "Clients synced.")
-
-
-@rpc("any_peer")
-func sync_client():
-	rpc("sync_client", peer_list)
-	print("[Server]: ", "Client synced.")
-
-
-func _on_close_server():
-	multiplayer.multiplayer_peer = null
-	Global.clear_child_nodes(peer_box, peer_list)
-	print("[Networking-Event]: ", "Server closed.")
-	peer_id = null
-	print("---------------------------------------\n",
-		"[GAME]: ", "Scene Reloaded.\n",
-		"---------------------------------------")
-	Global.reload_game()
+	pass

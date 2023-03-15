@@ -5,34 +5,26 @@ extends CanvasLayer
 @onready var JoiningInterface = %JoiningInterface
 @onready var Settings = %Settings
 
-signal _on_create_server
-signal _on_create_client
-signal _on_client_leave
-signal _on_close_server
 
-
-func _on_host_button_pressed_from_MainMenu():
-	MainMenu.hide()
-	HostingInterface.show()
-
-
-func _on_switch_menu(nodepath, target_nodepath, emit_signal_ = ""):
+func _on_switch_menu(nodepath : NodePath, target_nodepath : NodePath, function : String = ""):
 	var node = get_node(nodepath)
 	var target_node = get_node(target_nodepath)
 	target_node.show()
 	node.hide()
 	
-	if !emit_signal_.is_empty():
-		match emit_signal_:
+	if function != "":
+		match function:
 			"create_server":
-				emit_signal("_on_create_server")
+				Global.server.start()
 			"create_client":
-				emit_signal("_on_create_client")
+				Global.client.start()
 			"lobby_leave":
-				if multiplayer.is_server():
-					emit_signal("_on_close_server")
-				else:
-					emit_signal("_on_client_leave")
+				if multiplayer.multiplayer_peer.get_connection_status() != 0:
+					if multiplayer.multiplayer_peer.get_connection_status() != 1:
+						if multiplayer.is_server():
+							Global.server.close()
+						else:
+							Global.client.close()
 	
 	print("[UI-Event]: ", node.name, " -> ", target_node.name)
 
