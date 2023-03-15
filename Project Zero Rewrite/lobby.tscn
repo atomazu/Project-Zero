@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://dg3pay62k27ks"]
+
+[node name="Lobby" type="Control"]
+custom_minimum_size = Vector2(1000, 500)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -250.0
+offset_right = 450.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="MainPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -250.0
+offset_right = 700.0
+offset_bottom = 250.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainPanel"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/MarginContainer"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="MainPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "Lobby Interface"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="PeerInfoHeader" type="Label" parent="MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_filter = 0
+text = "Connected Peers:"
+
+[node name="ConfigureButton" type="Button" parent="MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+disabled = true
+text = "Configure Server"
+
+[node name="StartButton" type="Button" parent="MainPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+text = "Start Game"
+
+[node name="PeerBox" type="VBoxContainer" parent="MainPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+theme_override_constants/separation = 15
+
+[node name="LobbyControls" type="HBoxContainer" parent="MainPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+mouse_filter = 0
+theme_override_constants/separation = 5
+
+[node name="LeaveButton" type="Button" parent="MainPanel/MarginContainer/VBoxContainer/LobbyControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Leave to Main Menu"
+
+[node name="ReadyButton" type="Button" parent="MainPanel/MarginContainer/VBoxContainer/LobbyControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_pressed_color = Color(0.486275, 0.678431, 0.447059, 1)
+toggle_mode = true
+text = "Ready to play"
+
+[node name="SidePanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -293.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SidePanel"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SidePanel/MarginContainer"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="SidePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "Chat"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SidePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="HistoryHeader" type="Label" parent="SidePanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "History:"
+
+[node name="VoiceChatButton" type="Button" parent="SidePanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+disabled = true
+text = "Voice Chat"
+
+[node name="ChatBox" type="VBoxContainer" parent="SidePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SidePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="MessageEdit" type="LineEdit" parent="SidePanel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_default_cursor_shape = 0
+
+[node name="SendButton" type="Button" parent="SidePanel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+focus_mode = 0
+text = "Send"
